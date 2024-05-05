@@ -112,17 +112,16 @@ void saveMatrixToImage(vector<vector<int>> matrix, const string filename) {
     renderTexture.clear();
     for (size_t i = 0; i < matrix.size(); i++) {
         for (size_t j = 0; j < matrix[i].size(); j++) {
-            if (matrix[i][j] == 1) {
-                int colorNumber = (((i * i) + (j * j * j)) % colors.size());
+                int colorNumber = (((i+1) * (i+1) + ((j+1) * (j + 1) * (j + 1))) % colors.size());
                 sf::Text text;
                 text.setFont(font);
-                text.setString("0");
+                text.setString(to_string(matrix[i][j]));
                 text.setCharacterSize(pixelSize - 1);
                 if (matrix[i][j] == 1)text.setFillColor(colors[colorNumber]);
                 else text.setFillColor(zeroColor);
                 text.setPosition(j * pixelSize, i * pixelSize);
                 renderTexture.draw(text);
-            }
+            
         }
     }
     renderTexture.display();
