@@ -7,7 +7,7 @@ using namespace std;
 
 void readFromConsole(int& size);
 
-void readFromFile(std::string filename, int& size);
+bool readFromFile(std::string filename, int& size);
 
 void displayMatrix(vector<vector<int>> matrix);
 

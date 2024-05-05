@@ -39,11 +39,22 @@ int main() {
         
         if (in_option == "0") readFromConsole(size);
         else if (in_option == "1") {
+            
+            
             do {
                 cout << "Укажите файл для ввода исходных данных для работы программы (enter для файла по умолчанию): ";
                 getline(cin, input);
             } while (!regex_match(input, valid_path));
-            readFromFile(input, size);
+
+            bool valid_data = readFromFile(input, size);
+            while (!valid_data) {
+                do {
+                    cout << "Укажите новый файл для ввода исходных данных для работы программы (enter для файла по умолчанию): ";
+                    getline(cin, input);
+                } while (!regex_match(input, valid_path));
+                valid_data = readFromFile(input, size);
+            }
+                                   
         }
 
         vector<vector<int>> matrix = { {1, 0, 1}, {0, 1, 0}, {1, 0, 1} };

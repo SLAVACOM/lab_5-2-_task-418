@@ -37,7 +37,7 @@ bool readFromFile(std::string filename, int& size) {
         return true;
     }
     else {
-        cerr << "Ошибка при открытии файла" << endl;
+        cerr << "Ошибка при открытии файла";
         return false;
     }
 }
