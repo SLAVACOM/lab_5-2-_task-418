@@ -19,12 +19,14 @@ void readFromConsole(int& size) {
 
 bool readFromFile(std::string filename, int& size) {
     std::regex valid_size("^[1-9][0-9]*$");
-    ifstream file(filename == "" ? DinputFileName : filename);
+    ifstream file(filename == "" ? DinputFileName : filename+".txt");
 
     if (file.is_open()) {
         std::string line;
-        std::vector<string> data;
-        if (!(file >> size)) {
+
+        std::getline(file, line);
+
+        if (!regex_match(line, valid_size)) {
             cerr << "Неверные данные в файле" << endl;
             return false;
         }
@@ -33,6 +35,7 @@ bool readFromFile(std::string filename, int& size) {
             cerr << "Неверные данные в файле"<<endl;
             return false;
         }
+        size = stoi(line);
 
         return true;
     }
@@ -95,18 +98,18 @@ void constructMatrix(vector<vector<int>> &matrix) {
     matrix = newMat;
 }
 
-void saveMatrixToImage(vector<vector<int>> matrix, const string filename) {
+bool saveMatrixToImage(vector<vector<int>> matrix, const string filename) {
     int windowSize = matrix.size() * pixelSize;
     sf::RenderTexture renderTexture;
     if (!renderTexture.create(windowSize, windowSize)) {
         cerr << "Ошибка при создании изображения!" << endl;
-        return;
+        return false;
     }
 
     sf::Font font;
     if (!font.loadFromFile(fontName)) {
         cerr << "Ошибка при загрузке шрифта!" << endl;
-        return;
+        return false;
     }
 
     renderTexture.clear();
@@ -129,7 +132,12 @@ void saveMatrixToImage(vector<vector<int>> matrix, const string filename) {
     sf::Texture texture = renderTexture.getTexture();
     sf::Image image = texture.copyToImage();
 
-    if (!image.saveToFile(filename != "" ? filename : DoutputFileName))cerr << "Ошибка при сохранении!" << endl;
-    else cout << "Изображение успешно сохранено в файл " << filename << endl;
-
+    if (!image.saveToFile(filename != "" ? filename + "png" : DoutputFileName)) {
+        cerr << "Ошибка при сохранении!" << endl;
+        return false;
+    }
+    else {
+        cout << "Изображение успешно сохранено в файл " << filename << endl;
+        return true;
+    }
 }

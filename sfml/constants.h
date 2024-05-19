@@ -9,5 +9,6 @@ namespace constants {
     const int pixelSize{ 10 };
     const std::string fontName{ "arialmt.ttf" };
     const sf::Color zeroColor = sf::Color::White;
+
     const std::vector<sf::Color> colors{ sf::Color::Red,sf::Color::Blue,sf::Color::Cyan, sf::Color::Green, sf::Color::Magenta, sf::Color::Yellow };
 }

@@ -13,4 +13,4 @@ void displayMatrix(vector<vector<int>> matrix);
 
 void constructMatrix(vector<vector<int>> &matrix);
 
-void saveMatrixToImage(const vector<vector<int>> matrix, const string filename);
+bool saveMatrixToImage(const vector<vector<int>> matrix, const string filename);

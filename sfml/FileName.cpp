@@ -18,7 +18,6 @@ int main() {
     SetConsoleOutputCP(1251);
 
     regex valid_input("^[01]$");
-    regex valid_path(R"(^(?:(?:[^\\/][^\\/:*?"<>|\r\n]*[\\/])*(?:[^\\/:*?"<>|\r\n]+)\.txt)?$)");
 
     string input, in_option, out_option;
     
@@ -40,19 +39,16 @@ int main() {
         if (in_option == "0") readFromConsole(size);
         else if (in_option == "1") {
             
+            cout << "Укажите файл для ввода исходных данных (без расширения) (enter для файла по умолчанию): ";
+            getline(cin, input);
             
-            do {
-                cout << "Укажите файл для ввода исходных данных для работы программы (enter для файла по умолчанию): ";
-                getline(cin, input);
-            } while (!regex_match(input, valid_path));
-
             bool valid_data = readFromFile(input, size);
             while (!valid_data) {
                 do {
-                    cout << "Укажите новый файл для ввода исходных данных для работы программы (enter для файла по умолчанию): ";
+                    cout << "Укажите новый файл для ввода исходных данных (без расширения) (enter для файла по умолчанию): ";
                     getline(cin, input);
-                } while (!regex_match(input, valid_path));
-                valid_data = readFromFile(input, size);
+                    valid_data = readFromFile(input, size);
+                } while (!valid_data);
             }
                                    
         }
@@ -64,11 +60,13 @@ int main() {
 
         if (out_option == "0") displayMatrix(matrix);
         else if (out_option == "1") {
+            bool valid_file = false;
             do {
-                cout << "Укажите файл для вывода исходных данных для работы программы (enter для файла по умолчанию): ";
+                cout << "Укажите файл для вывода исходных данных (без расширения) (enter для файла по умолчанию): ";
                 getline(cin, input);
-            } while (!regex_match(input, valid_path));
-            saveMatrixToImage(matrix, input);
+                valid_file = saveMatrixToImage(matrix, input);
+            } while (!valid_file);
+            
         }
 
         if (in_option == "0") {
